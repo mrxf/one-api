@@ -47,7 +47,6 @@ function App() {
       statusDispatch({ type: 'set', payload: data });
       localStorage.setItem('system_name', data.system_name);
       localStorage.setItem('logo', data.logo);
-      localStorage.setItem('footer_html', data.footer_html);
       localStorage.setItem('quota_per_unit', data.quota_per_unit);
       localStorage.setItem('display_in_currency', data.display_in_currency);
       if (data.chat_link) {

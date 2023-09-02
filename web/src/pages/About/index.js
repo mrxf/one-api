@@ -31,28 +31,33 @@ const About = () => {
 
   return (
     <>
-      {
-        aboutLoaded && about === '' ? <>
+      {aboutLoaded && about === '' ? (
+        <>
           <Segment>
             <Header as='h3'>关于</Header>
-            <p>可在设置页面设置关于内容，支持 HTML & Markdown</p>
-            项目仓库地址：
-            <a href='https://github.com/songquanpeng/one-api'>
-              https://github.com/songquanpeng/one-api
-            </a>
+            <p>
+              通过修改接口中的<code>https://api.openai.com</code>地址改为
+              <code>{window.location.protocol}//{window.location.host}</code>即可使用本平台。
+            </p>
           </Segment>
-        </> : <>
-          {
-            about.startsWith('https://') ? <iframe
+        </>
+      ) : (
+        <>
+          {about.startsWith('https://') ? (
+            <iframe
               src={about}
               style={{ width: '100%', height: '100vh', border: 'none' }}
-            /> : <div style={{ fontSize: 'larger' }} dangerouslySetInnerHTML={{ __html: about }}></div>
-          }
+            />
+          ) : (
+            <div
+              style={{ fontSize: 'larger' }}
+              dangerouslySetInnerHTML={{ __html: about }}
+            ></div>
+          )}
         </>
-      }
+      )}
     </>
   );
 };
-
 
 export default About;

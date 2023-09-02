@@ -2,8 +2,22 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/User';
 
-import { Button, Container, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react';
-import { API, getLogo, getSystemName, isAdmin, isMobile, showSuccess } from '../helpers';
+import {
+  Button,
+  Container,
+  Dropdown,
+  Icon,
+  Menu,
+  Segment,
+} from 'semantic-ui-react';
+import {
+  API,
+  getLogo,
+  getSystemName,
+  isAdmin,
+  isMobile,
+  showSuccess,
+} from '../helpers';
 import '../index.css';
 
 // Header Buttons
@@ -11,58 +25,58 @@ let headerButtons = [
   {
     name: '首页',
     to: '/',
-    icon: 'home'
+    icon: 'home',
   },
   {
     name: '渠道',
     to: '/channel',
     icon: 'sitemap',
-    admin: true
+    admin: true,
   },
   {
     name: '令牌',
     to: '/token',
-    icon: 'key'
+    icon: 'key',
   },
   {
     name: '兑换',
     to: '/redemption',
     icon: 'dollar sign',
-    admin: true
+    admin: true,
   },
   {
     name: '充值',
     to: '/topup',
-    icon: 'cart'
+    icon: 'cart',
   },
   {
     name: '用户',
     to: '/user',
     icon: 'user',
-    admin: true
+    admin: true,
   },
   {
     name: '日志',
     to: '/log',
-    icon: 'book'
+    icon: 'book',
   },
   {
     name: '设置',
     to: '/setting',
-    icon: 'setting'
+    icon: 'setting',
   },
   {
     name: '关于',
     to: '/about',
-    icon: 'info circle'
-  }
+    icon: 'info circle',
+  },
 ];
 
 if (localStorage.getItem('chat_link')) {
   headerButtons.splice(1, 0, {
     name: '聊天',
     to: '/chat',
-    icon: 'comments'
+    icon: 'comments',
   });
 }
 
@@ -104,7 +118,6 @@ const Header = () => {
       }
       return (
         <Menu.Item key={button.name} as={Link} to={button.to}>
-          <Icon name={button.icon} />
           {button.name}
         </Menu.Item>
       );
@@ -120,21 +133,17 @@ const Header = () => {
           style={
             showSidebar
               ? {
-                borderBottom: 'none',
-                marginBottom: '0',
-                borderTop: 'none',
-                height: '51px'
-              }
+                  borderBottom: 'none',
+                  marginBottom: '0',
+                  borderTop: 'none',
+                  height: '51px',
+                }
               : { borderTop: 'none', height: '52px' }
           }
         >
           <Container>
             <Menu.Item as={Link} to='/'>
-              <img
-                src={logo}
-                alt='logo'
-                style={{ marginRight: '0.75em' }}
-              />
+              <img src={logo} alt='logo' style={{ marginRight: '0.75em' }} />
               <div style={{ fontSize: '20px' }}>
                 <b>{systemName}</b>
               </div>
@@ -185,7 +194,10 @@ const Header = () => {
 
   return (
     <>
-      <Menu borderless style={{ borderTop: 'none' }}>
+      <Menu
+        borderless
+        style={{ border: 'none', boxShadow: 'none', marginTop: 16 }}
+      >
         <Container>
           <Menu.Item as={Link} to='/' className={'hide-on-mobile'}>
             <img src={logo} alt='logo' style={{ marginRight: '0.75em' }} />

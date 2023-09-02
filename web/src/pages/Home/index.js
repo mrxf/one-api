@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Card, Grid, Header, Segment } from 'semantic-ui-react';
-import { API, showError, showNotice, timestamp2string } from '../../helpers';
-import { StatusContext } from '../../context/Status';
 import { marked } from 'marked';
+import React, { useEffect, useState } from 'react';
+import { API, showError, showNotice } from '../../helpers';
+import { Button } from 'semantic-ui-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const [statusState, statusDispatch] = useContext(StatusContext);
   const [homePageContentLoaded, setHomePageContentLoaded] = useState(false);
   const [homePageContent, setHomePageContent] = useState('');
 
@@ -14,11 +13,11 @@ const Home = () => {
     const { success, message, data } = res.data;
     if (success) {
       let oldNotice = localStorage.getItem('notice');
-        if (data !== oldNotice && data !== '') {
-            const htmlNotice = marked(data);
-            showNotice(htmlNotice, true);
-            localStorage.setItem('notice', data);
-        }
+      if (data !== oldNotice && data !== '') {
+        const htmlNotice = marked(data);
+        showNotice(htmlNotice, true);
+        localStorage.setItem('notice', data);
+      }
     } else {
       showError(message);
     }
@@ -42,91 +41,36 @@ const Home = () => {
     setHomePageContentLoaded(true);
   };
 
-  const getStartTimeString = () => {
-    const timestamp = statusState?.status?.start_time;
-    return timestamp2string(timestamp);
-  };
-
   useEffect(() => {
     displayNotice().then();
     displayHomePageContent().then();
   }, []);
   return (
-    <>
-      {
-        homePageContentLoaded && homePageContent === '' ? <>
-          <Segment>
-            <Header as='h3'>系统状况</Header>
-            <Grid columns={2} stackable>
-              <Grid.Column>
-                <Card fluid>
-                  <Card.Content>
-                    <Card.Header>系统信息</Card.Header>
-                    <Card.Meta>系统信息总览</Card.Meta>
-                    <Card.Description>
-                      <p>名称：{statusState?.status?.system_name}</p>
-                      <p>版本：{statusState?.status?.version ? statusState?.status?.version : "unknown"}</p>
-                      <p>
-                        源码：
-                        <a
-                          href='https://github.com/songquanpeng/one-api'
-                          target='_blank'
-                        >
-                          https://github.com/songquanpeng/one-api
-                        </a>
-                      </p>
-                      <p>启动时间：{getStartTimeString()}</p>
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-              <Grid.Column>
-                <Card fluid>
-                  <Card.Content>
-                    <Card.Header>系统配置</Card.Header>
-                    <Card.Meta>系统配置总览</Card.Meta>
-                    <Card.Description>
-                      <p>
-                        邮箱验证：
-                        {statusState?.status?.email_verification === true
-                          ? '已启用'
-                          : '未启用'}
-                      </p>
-                      <p>
-                        GitHub 身份验证：
-                        {statusState?.status?.github_oauth === true
-                          ? '已启用'
-                          : '未启用'}
-                      </p>
-                      <p>
-                        微信身份验证：
-                        {statusState?.status?.wechat_login === true
-                          ? '已启用'
-                          : '未启用'}
-                      </p>
-                      <p>
-                        Turnstile 用户校验：
-                        {statusState?.status?.turnstile_check === true
-                          ? '已启用'
-                          : '未启用'}
-                      </p>
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-            </Grid>
-          </Segment>
-        </> : <>
-          {
-            homePageContent.startsWith('https://') ? <iframe
-              src={homePageContent}
-              style={{ width: '100%', height: '100vh', border: 'none' }}
-            /> : <div style={{ fontSize: 'larger' }} dangerouslySetInnerHTML={{ __html: homePageContent }}></div>
-          }
-        </>
-      }
-
-    </>
+    <div className='text-center pt-4'>
+      <h1 className='text-[64px] text-gray-800 font-bold'>
+        <span className='bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent'>
+          大语言模型
+        </span>
+        应用访问平台
+      </h1>
+      <div className='text-lg mt-4'>
+        免费助力每一位大语言模型爱好者，快速访问与体验大语言模型
+      </div>
+      <div className='text-lg mt-1'>
+        高速、稳定、安全的使用AI服务，构建AI应用
+      </div>
+      <div className='mt-8'>
+        <Link to='/login'>
+          <Button color='blue' icon=''>
+            开始使用
+          </Button>
+        </Link>
+      </div>
+      <div
+        style={{ fontSize: 'larger' }}
+        dangerouslySetInnerHTML={{ __html: homePageContent }}
+      ></div>
+    </div>
   );
 };
 

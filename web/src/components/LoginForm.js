@@ -1,5 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Divider, Form, Grid, Header, Image, Message, Modal, Segment } from 'semantic-ui-react';
+import {
+  Button,
+  Divider,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Message,
+  Modal,
+  Segment,
+} from 'semantic-ui-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { UserContext } from '../context/User';
 import { API, getLogo, showError, showSuccess } from '../helpers';
@@ -8,7 +18,7 @@ const LoginForm = () => {
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
-    wechat_verification_code: ''
+    wechat_verification_code: '',
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
@@ -67,7 +77,7 @@ const LoginForm = () => {
     if (username && password) {
       const res = await API.post(`/api/user/login`, {
         username,
-        password
+        password,
       });
       const { success, message, data } = res.data;
       if (success) {
@@ -113,7 +123,7 @@ const LoginForm = () => {
             </Button>
           </Segment>
         </Form>
-        <Message>
+        <Message className='hidden'>
           忘记密码？
           <Link to='/reset' className='btn btn-link'>
             点击重置

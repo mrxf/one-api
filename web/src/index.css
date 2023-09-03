@@ -37,3 +37,8 @@ code {
         display: none !important;
     }
 }
+
+.ui.segment {
+    border: none !important;
+    box-shadow: none !important;
+}

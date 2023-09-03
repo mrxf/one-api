@@ -4,9 +4,8 @@ permissions:
 
 on:
   push:
-    tags:
-      - '*'
-      - '!*-alpha*'
+    branches:
+      - release
 jobs:
   release:
     runs-on: macos-latest
